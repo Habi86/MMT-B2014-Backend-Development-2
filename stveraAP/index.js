@@ -5,13 +5,31 @@ const numCPUs = require('os').cpus().length; //from example
 const app = express();
 console.log(`worker stevera is super`);
 
-if (cluster.isMaster) {
+app.use(express.static('public'));
+
+app.get('/', function (req, res) {
+  res.sendFile( __dirname + "/public/" + "index.html" );
+});
+
+app.get('/', function (req, res) {
+  res.sendFile( __dirname + "/public/" + "michaelkors.html" );
+});
+
+app.get('/', function (req, res) {
+  res.sendFile( __dirname + "/public/" + "baglove.html" );
+});
+
+app.get('/', function (req, res) {
+        res.send('Example app listening on port 5000!');
+});
+
+/*if (cluster.isMaster) {
   // Fork workers.
  
-  var worker = cluster.fork();
-  
   for (var i = 0; i < numCPUs; i++) {
-      
+  	cluster.fork();
+  }   
+
  /*  not sure if necessary
 
    worker.on('exit', (code, signal) => {
@@ -29,10 +47,9 @@ if (cluster.isMaster) {
   cluster.on('exit', (worker, code, signal) => {
     console.log(`worker ${worker.process.pid} died`);
   }); 
- */ 
-}
 
-} else {
+} 
+else {
   // Workers can share any TCP connection
   // In this case it is an HTTP server
  /* http.createServer((req, res) => {
@@ -41,9 +58,7 @@ if (cluster.isMaster) {
   }).listen(8000);
   */
     // Add a basic route – index page
-    app.get('/', function (req, res) {
-        res.send('Hello World!');
-    });
+/*  
 
     // Bind to a port
     var serve = app.listen(8000, function(){
@@ -51,5 +66,5 @@ if (cluster.isMaster) {
     };
     console.log('Application running!');
 }
-
+*/
 
