@@ -1,26 +1,27 @@
 const express = require('express');
-const cluster = require('cluster');
-const http = require('http');
-const numCPUs = require('os').cpus().length; //from example 
+//const cluster = require('cluster');
+//const http = require('http');
+//const numCPUs = require('os').cpus().length; //from example 
 const app = express();
-console.log(`worker stevera is super`);
+//console.log(`worker stevera is super`);
 
-app.use(express.static('public'));
+app.use(express.static('/public'));
 
 app.get('/', function (req, res) {
   res.sendFile( __dirname + "/public/" + "index.html" );
 });
 
-app.get('/', function (req, res) {
+app.get('/michaelkors', function (req, res) {
   res.sendFile( __dirname + "/public/" + "michaelkors.html" );
 });
 
-app.get('/', function (req, res) {
+
+app.get('/baglove', function (req, res) {
   res.sendFile( __dirname + "/public/" + "baglove.html" );
 });
 
-app.get('/', function (req, res) {
-        res.send('Example app listening on port 5000!');
+app.listen(5000, function () {
+  console.log('Example app listening on port 5000!');
 });
 
 /*if (cluster.isMaster) {
