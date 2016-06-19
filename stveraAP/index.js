@@ -3,22 +3,21 @@ const cluster = require('cluster');
 const http = require('http');
 const numCPUs = require('os').cpus().length; //from example 
 const app = express();
-
-
-console.log(`worker stevera is super died`);
+console.log(`worker stevera is super`);
 
 if (cluster.isMaster) {
-
+  // Fork workers.
+ 
+  var worker = cluster.fork();
+  
   for (var i = 0; i < numCPUs; i++) {
-  	  // Fork workers
-  	  var worker = cluster.fork();
-  }
       
-    worker.on('online', (worker) => {
-      console.log(`worker with id`+ worker.process.pid+'is working');
+ /*  not sure if necessary
+
+   worker.on('exit', (code, signal) => {
+    if( signal ) {
+      console.log(`worker was killed by signal: ${signal}`);
     } 
-
-
     else if( code !== 0 ) {
       console.log(`worker exited with error code: ${code}`);
     } 
@@ -30,7 +29,7 @@ if (cluster.isMaster) {
   cluster.on('exit', (worker, code, signal) => {
     console.log(`worker ${worker.process.pid} died`);
   }); 
-  
+ */ 
 }
 
 } else {
@@ -48,9 +47,9 @@ if (cluster.isMaster) {
 
     // Bind to a port
     var serve = app.listen(8000, function(){
-    	 console.log('Application running!');
-    });
-   
+
+    };
+    console.log('Application running!');
 }
 
 
